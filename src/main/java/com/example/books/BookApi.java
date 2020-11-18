@@ -1,6 +1,7 @@
 package com.example.books;
 
 import com.example.books.entity.Book;
+import com.example.books.exception.BookNotFoundException;
 import com.example.books.repo.BookRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class BookApi {
 
     @GetMapping("/book/{id}")
     public Book getBook(@PathVariable long id) {
-        return bookRepo.findById(id).orElseThrow(() -> new RuntimeException("Book doesn't exist"));
+        return bookRepo.findById(id).orElseThrow(() -> new BookNotFoundException(id));
     }
 
     @PutMapping("/book/{id}")
